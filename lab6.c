@@ -48,6 +48,7 @@ return z;
 void check(int n, int l, int a[])
 {
   int i = 0, p = 0, u = 0, h = 0, k = 0;
+  {
   for(i = 0; i < n; i++)
           {
               if (easy2(a[i]) == 1)
@@ -71,7 +72,6 @@ void check(int n, int l, int a[])
                     a[h] = u;
                     printf("Индексы простых элементов: ");
                   }
-
               else
               {
               if (easy2(a[i]))
@@ -80,14 +80,15 @@ void check(int n, int l, int a[])
               printf("\n");
             }
           }
-        }
+      }
+}
 }
  int main ()
  {
  srand ( time ( NULL ) ) ;
  int n, b;
  printf (" n -> ") ;
- scanf ("%d " , &n ) ;
+ scanf ("%d" , &n) ;
  int A [ n ];
  fill (n , A ) ;
  printf("Исходный массив:\n");
