@@ -48,39 +48,43 @@ return z;
 void check(int n, int l, int a[])
 {
   int i = 0, p = 0, u = 0, h = 0, k = 0;
-  {
-  for(i = 0; i < n; i++)
+    switch(l)
+    {
+      case 0:
+          break;
+      case 1:
+          for(i = 0; i < n; i++)
           {
               if (easy2(a[i]) == 1)
-              {
                   printf("Простое число: %d\n", a[i]);
-              }
-          else
-          {
-          if ((easy2(a[i]) == 1) && !k)
-                   {
-                        p = i;
-                        k++;
-                    }
-          else
-            {
-             if ((easy2(a[i]) == 1) && k)
-            {
-                    h = i;
-                    u = a[p];
-                    a[p] = a[h];
-                    a[h] = u;
-                    printf("Индексы простых элементов: ");
-                  }
-              else
-              {
-              if (easy2(a[i]))
-                      printf("%d, ", i);
-              }
-              printf("\n");
-            }
           }
-      }
+          break;
+      case 2:
+          for(i = 0; i < n; i++)
+          {
+              if ((easy2(a[i]) == 1) && !k)
+              {
+                  p = i;
+                  k++;
+              }
+              if ((easy2(a[i]) == 1) && k)
+                  h = i;
+          }
+          u = a[p];
+          a[p] = a[h];
+          a[h] = u;
+          break;
+      default:
+          printf("Индексы простых элементов: ");
+          for(i = 0; i < n; i++)
+          {
+              if (easy2(a[i]))
+                  printf("%d, ", i);
+          }
+          printf("\n");
+          break;
+    }
+}
 }
 }
  int main ()
