@@ -18,20 +18,7 @@ int mygetch()
     return c;
 }
 
-int is_functional()
-{
-    int flags = fcntl(STDIN_FILENO, F_GETFL, 0);
-    fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
-    char c;
-    int nofchars = 0;
-    do {
-        c = getchar();
-        nofchars++;
-    } while (c!=EOF);
 
-    fcntl(STDIN_FILENO, F_SETFL, flags);
-    return nofchars!=1;
-}
 
 int main()
 {
@@ -42,7 +29,7 @@ int main()
         x = mygetch();
         if(!isalnum(x) && !ispunct(x))
         {
-            if((x == 0x7f || !is_functional()) && x != 0x1b)
+            if(x == 0x7f  && x != 0x1b)
                 break;
             continue;
         }
