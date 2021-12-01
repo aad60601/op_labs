@@ -18,6 +18,21 @@ int mygetch()
     return c;
 }
 
+int is_functional()
+{
+    int flags = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
+    char c;
+    int nofchars = 0;
+    //read all pending func-key's codes not to handle them in main loop
+    do {
+        c = getchar();
+        nofchars++;
+    } while (c!=EOF);
+
+    fcntl(STDIN_FILENO, F_SETFL, flags);
+    return nofchars!=1;
+}
 
 
 int main()
