@@ -1,33 +1,35 @@
 #include <math.h>
 #include <stdio.h>
+double funx(unsigned int n)
+{
+    double xi, integral, integral2, h, y, x, e, tochost = 2.0f;
+    h = 2.0 / n;
+    for (int i = 0; i < n; i++)
+    {
+        xi = 0 + i * h;
+        x = xi + h / 2.0;
+        if (x <= 1.0)
+            y = 8 * x * x * x * cos(x);
+        else
+            y = log(1 + sqrt(x)) - cos(x);
+        integral = integral + y;
+    }
+    return integral * h;
+}
+
 int main()
 {
-    double xi, Integral, Integral2, h, y, x, e, d = 1;
-    int n = 2;
-    printf("E -> ");
+    double xi, integral, integral2, h, y, x, e, tochost = 2.0f;
+    unsigned int n = 2;
+    printf("Введите необходимую точность -> ");
     scanf("%lf", &e);
-    while (d >= e)
+    while (tochost >= e)
     {
-        Integral2 = Integral;
-        Integral = 0;
-        h = 2.0 / n;
-        for (int i = 0; i < n; i++)
-        {
-            xi = i * h;
-            x = xi + h / 2.0;
-            if (x > 1.0)
-              y = (log(1 + (sqrt(x))-cos(x)));
-            else
-              y = 8 * x * x * x * cos(x);
-            Integral = Integral + y;
-        }
-        Integral = h * Integral;
+        integral2 = integral;
+        integral = 0;
+        integral = funx(n);
         n = n * 2;
-        d = fabs(Integral - Integral2) / 3.0;
-        printf("\nI = %.8lf", Integral);
-        printf("\nd = %.8lf", d);
-        printf("\nn = %d\n", n);
+        tochost = fabs(integral - integral2) / 2.0f;
     }
-    printf("\nAnswer = %.8lf\n", Integral);
-    return 0;
+    printf("\nОтвет = %lf\n", integral);
  }
