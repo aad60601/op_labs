@@ -29,6 +29,8 @@ maxlen = length;
 strcpy(pal, token);
  }
  }
+else (token = "Not palindrom");
+strcpy(pal, token);
 token = strtok(NULL, ",");
  }  while (token);
 printf("Long palindrome: %s\n", pal);
