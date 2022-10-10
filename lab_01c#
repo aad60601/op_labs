@@ -1,0 +1,220 @@
+using System;
+//1 +
+//2 +
+// 3+
+// 4+
+// 5+
+// 6 +
+// 7+
+//8+
+//9+
+//10+
+//11+
+//12
+
+namespace Laba1Oop
+{
+class Program
+{
+static void Main(string[] args)
+{
+    Rectangle<double> rectangle = new Rectangle<double>("Прямоугольник");
+    Paralel<double> paralel = new Paralel<double>("Прямоугольный параллелепипед");
+    Console.Write("Введите ширину: ");
+    rectangle.SetWidth(Console.ReadLine());
+    if (rectangle)
+    Console.WriteLine("Введено правильное значение для ширины ");
+    else
+    Console.WriteLine("Введено не правильное значение для ширины! ");
+    Console.Write("Введите высоту: ");
+    rectangle.SetHeigth(Console.ReadLine());
+    Console.Write("Введите длину: ");
+    rectangle.SetLength(Console.ReadLine());
+    rectangle.Print();
+    rectangle.Info2 += DisplayMessage;
+    rectangle.Message();
+    Console.Write("Результат площади: ");
+    Console.WriteLine(rectangle.CalcSquare());
+    Console.Write("Результат периметра: ");
+    Console.WriteLine(rectangle.CalcPerimetr());
+    paralel.Print();
+    paralel.Info1 += DisplayMessage;
+    paralel.Message();
+    Console.Write("Результат площади: ");
+    Console.WriteLine(rectangle.CalcSquare());
+    Console.Write("Результат объёма: ");
+    Console.WriteLine(paralel.CalcVolume());
+    (double _width, double _heigth, double _length) = rectangle;
+    Console.ReadKey();
+    void DisplayMessage(string message)=> Console.WriteLine(message);
+}
+}
+}
+interface Iscore
+{
+    public double Width {get; set;}
+    public double Heigth {get; set;}
+    public double Length {get; set;}
+}
+public abstract class Variables:Iscore
+{
+    public delegate void Info(string message);
+    //protected readonly string _par = "Прямоугольный параллелепипед";
+    //protected readonly string _rec = "Прямоугольник";
+    private static double _width;
+    private static double _length;
+    private static double _heigth;
+    //Result? result;
+    public string Name{ get; set;}
+    public virtual void Print()
+    {
+        Console.WriteLine(Name);
+    }
+
+    public void SetWidth(string? input)
+    {
+        if (double.TryParse(input, out double width))
+        {
+            _width = width;
+            if (_width <= 0)
+            {
+                Console.WriteLine("Введите значения больше нуля");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Некорректный ввод");
+        }
+
+    }
+    public double Width
+    {
+    set
+    {
+        _width = value;
+    }
+    get
+    {
+        return _width;
+    }
+    }
+
+    public void SetHeigth(string? input)
+    {
+        if (double.TryParse(input, out double heigth))
+        {
+            _heigth = heigth;
+            if (_heigth <= 0)
+            {
+                Console.WriteLine("Введите значения больше нуля");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Некорректный ввод");
+        }
+    }
+    public double Heigth
+    {
+    set
+    {
+        _heigth = value;
+    }
+    get
+    {
+        return _heigth;
+    }
+    }
+    public void SetLength(string? input)
+    {
+        if (double.TryParse(input, out double length))
+        {
+            _length = length;
+            if (_length <= 0)
+            {
+                Console.WriteLine("Введите значения больше нуля");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Некорректный ввод");
+        }
+    }
+    public double Length
+    {
+    set
+    {
+        _length = value;
+        if (value <= 0)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+    }
+    get
+    {
+        return _length;
+    }
+    }
+
+    public static bool operator true(Variables width)
+    {
+        return width.Width > 0;
+    }
+    public static bool operator false(Variables width)
+    {
+        return width.Width <= 0;
+    }
+    }
+public class Paralel<T>:Variables
+{
+    public event Info Info1;
+    public void Message()
+    {
+        Info1?.Invoke("Считаем объём и площадь!");
+    }
+    protected readonly string _par = "Прямоугольный параллелепипед";
+    public Paralel(string name)
+    {
+        Name = name;
+    }
+    public double CalcSquare()
+    {
+        return 2 * (Width * Length + Heigth * Length + Width * Heigth);
+    }
+    public double CalcVolume()
+    {
+        return Width * Length * Heigth;
+    }
+
+}
+public class Rectangle<T>:Variables
+{
+//protected readonly string _rec = "Прямоугольник";
+    public event Info Info2;
+    public void Message()
+    {
+        Info2?.Invoke("Считаем периметр и площадь!");
+    }
+    public Rectangle(string name)
+    {
+        Name = name;
+    }
+    public double CalcSquare()
+    {
+        return Width + Length;
+    }
+    public double CalcPerimetr()
+    {
+        return 2 * (Width * Length);
+    }
+    public void Deconstruct(out double rectanglewidth,out double rectangleheigth,out double rectanglelength)
+    {
+        rectanglewidth = Width;
+        rectangleheigth = Heigth;
+        rectanglelength = Length;
+    }
+    ~Rectangle()
+    {
+
+    }   
+}
